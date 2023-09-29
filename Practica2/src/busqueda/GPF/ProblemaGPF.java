@@ -243,7 +243,21 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	@Override
 	public EstadoGPF resul(EstadoGPF e, AccionGPF a) {
 		if (aplicable(e,a)) {
-			return e;
+			switch (a.getTipo()) {
+			case 'u':
+				return new EstadoGPF(e.getX(), e.getY()-1);
+				
+			case 'd':
+				return new EstadoGPF(e.getX(), e.getY()+1);
+				
+			case 'l':
+				return new EstadoGPF(e.getX()-1, e.getY());
+				
+			case 'r':
+				return new EstadoGPF(e.getX()+1, e.getY());
+			
+		
+	};
 		}
 		return null; // la accion no es aplicable (no deberia llegar aqui nunca)
 		}
@@ -262,31 +276,7 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	 */
 	@Override
 	public double coste(EstadoGPF e1, AccionGPF a, EstadoGPF e2) {
-		int x = e2.getX() - e1.getX();
-		int y = e2.getY() - e1.getY();
-		double coste = 0;
-		char mov = ' ';
-		if (x == 0 && y != 0) {
-			if (y < 0) {
-				mov = 'd';
-			}
-			if (y > 0) {
-				mov = 'u';
-			}
-		}else if (x != 0 && y == 0) {
-			if (x < 0) {
-				mov = 'l';
-			}
-			if (x > 0) {
-				mov = 'r';
-			}
-		}
-		
-		if (mov != ' ' && aplicable(e1,a) && mov == a.getTipo()) {
-			return grid[e2.getX()][e2.getY()];
-		}
-		
-			return 0; //  TODO Hay que completarlo. �OJO! en GPF, solo depende de la casilla a la que se llega
+			return grid[e2.getY()][e2.getX()];
 	}
 
 
