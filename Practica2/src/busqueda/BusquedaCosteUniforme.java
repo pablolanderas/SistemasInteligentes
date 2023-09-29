@@ -47,7 +47,7 @@ public class BusquedaCosteUniforme<Estado,Accion> extends Busqueda<Estado,Accion
 			if (explorados.get(nodo.getEstado()) == null) {
 				iter = frontera.frontera.iterator();
 				parado = false;
-				while (iter.hasNext()) {
+				while (iter.hasNext() && !parado) {
 					n = iter.next();
 					if (n.getEstado().equals(nodo.getEstado())) {
 						if (nodo.getG() < n.getG()) {
@@ -55,7 +55,6 @@ public class BusquedaCosteUniforme<Estado,Accion> extends Busqueda<Estado,Accion
 							frontera.aniade(nodo);
 						}
 						parado = true;
-						break;
 					}
 				}
 				if (!parado) frontera.aniade(nodo);
