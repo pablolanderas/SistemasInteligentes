@@ -13,7 +13,7 @@ public class AccionGPF {
 	String accion;
 	char tipo;
 	
-	public AccionGPF(char tipoAccion) throws Exception {
+	public AccionGPF(char tipoAccion) {
 		tipo = tipoAccion;
 		if (tipoAccion == 'u') {
 			this.accion = "Arriba";
@@ -24,11 +24,13 @@ public class AccionGPF {
 		} else if (tipoAccion == 'r') {
 			this.accion = "Derecha";
 		} else {
-			throw new Exception("Accion no valida");
+			/* throw new Exception("Accion no valida"); 
+			 * Se deberia implementar una excepcion para los casos no esperados
+			 */
 		}
 	}	
 	
-	// ¡IMPORTANTE! Tiene que implementar el método toString() para poder imprimir la solucion
+	// ï¿½IMPORTANTE! Tiene que implementar el mï¿½todo toString() para poder imprimir la solucion
     // (es decir, la secuencia de acciones para llegar desde el estado inicial a la meta)	
 	@Override
 	public String toString() {

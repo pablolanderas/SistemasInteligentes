@@ -177,7 +177,23 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	@Override
 	public List<AccionGPF> acciones(EstadoGPF eactual) {
 		List<AccionGPF> lista = new LinkedList<AccionGPF>();
-		// TODO Hay que completarlo
+		AccionGPF up = new AccionGPF('u');
+		AccionGPF down = new AccionGPF('d');
+		AccionGPF left = new AccionGPF('l');
+		AccionGPF right = new AccionGPF('r');
+		if (aplicable(eactual, up)) {
+			lista.add(up);
+		}
+		
+		if (aplicable(eactual, down)) {
+			lista.add(down);
+		}
+		if (aplicable(eactual, left)) {
+			lista.add(left);
+		}
+		if (aplicable(eactual, right)) {
+			lista.add(right);
+		}
 		return lista;
 	}
 	
@@ -187,8 +203,36 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	 */
 	@Override
 	public boolean aplicable(EstadoGPF e, AccionGPF a) {
-		boolean aplicable=true; // por defecto, entendemos que se puede aplicar
-		// TODO Hay que completarlo
+		boolean aplicable=false; // por defecto, entendemos que se puede aplicar
+				switch (a.getTipo()) {
+				case 'u':
+					if(e.getY() > 0 && grid[e.getY() - 1][e.getX()] != 0) {
+						
+						aplicable = true;
+					}
+					break;
+					
+				case 'd':
+					if(e.getY() < gridNFilas-1 && grid[e.getY() + 1][e.getX()] != 0) {
+						aplicable = true;
+					}
+					break;
+					
+				case 'l':
+					if(e.getX() > 0 && grid[e.getY()][e.getX() - 1] != 0 ) {
+						aplicable = true;
+					}
+					break;
+					
+				case 'r':
+					if(e.getX() < gridNCols -1 && grid[e.getY()][e.getX() + 1] != 0 ) {
+						aplicable = true;
+					}
+					break;
+				
+			
+		}
+		
 		return aplicable;
 	}
 
@@ -198,7 +242,9 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	 */
 	@Override
 	public EstadoGPF resul(EstadoGPF e, AccionGPF a) {
-		// TODO Hay que completarlo
+		if (aplicable(e,a)) {
+			return e;
+		}
 		return null; // la accion no es aplicable (no deberia llegar aqui nunca)
 		}
 	
@@ -216,7 +262,31 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	 */
 	@Override
 	public double coste(EstadoGPF e1, AccionGPF a, EstadoGPF e2) {
-			return 0; //  TODO Hay que completarlo. ¡OJO! en GPF, solo depende de la casilla a la que se llega
+		int x = e2.getX() - e1.getX();
+		int y = e2.getY() - e1.getY();
+		double coste = 0;
+		char mov = ' ';
+		if (x == 0 && y != 0) {
+			if (y < 0) {
+				mov = 'd';
+			}
+			if (y > 0) {
+				mov = 'u';
+			}
+		}else if (x != 0 && y == 0) {
+			if (x < 0) {
+				mov = 'l';
+			}
+			if (x > 0) {
+				mov = 'r';
+			}
+		}
+		
+		if (mov != ' ' && aplicable(e1,a) && mov == a.getTipo()) {
+			return grid[e2.getX()][e2.getY()];
+		}
+		
+			return 0; //  TODO Hay que completarlo. ï¿½OJO! en GPF, solo depende de la casilla a la que se llega
 	}
 
 
