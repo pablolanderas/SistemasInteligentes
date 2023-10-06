@@ -5,6 +5,7 @@ package busqueda.GPF;
  * @version 2021.10.*
  */
 import java.util.List;
+import java.util.Random;
 
 import busqueda.Busqueda;
 import busqueda.BusquedaPrimeroAnchura;
@@ -22,12 +23,37 @@ public class Tester {
 	public static void main( String[] argv) {
 
 		// OPCION 1: Para probar todas las busquedas con un problema concreto
-		pruebaUnProblema("p8x8.txt");
 		pruebaUnProblema("prob10x10-0.txt");
+		pruebaUnProblema("prob10x10-1.txt");
+		pruebaUnProblema("prob10x10-2.txt");
+		pruebaUnProblema("prob10x10-3.txt");
+		pruebaUnProblema("prob10x10-4.txt");
+		pruebaUnProblema("prob10x10-5.txt");
+		pruebaUnProblema("prob10x10-6.txt");
+		pruebaUnProblema("prob10x10-7.txt");
+		pruebaUnProblema("prob10x10-8.txt");
+		pruebaUnProblema("prob10x10-9.txt");
+		pruebaUnProblema("prob10x15-0.txt");
+		pruebaUnProblema("prob10x15-1.txt");
+		pruebaUnProblema("prob10x15-2.txt");
+		pruebaUnProblema("prob10x15-3.txt");
+		pruebaUnProblema("prob10x15-4.txt");
+		pruebaUnProblema("prob10x15-5.txt");
+		pruebaUnProblema("prob10x15-6.txt");
 		pruebaUnProblema("prob10x15-7.txt");
+		pruebaUnProblema("prob10x15-8.txt");
+		pruebaUnProblema("prob10x15-9.txt");
+		pruebaUnProblema("prob15x15-0.txt");
+		pruebaUnProblema("prob15x15-1.txt");
+		pruebaUnProblema("prob15x15-2.txt");
+		pruebaUnProblema("prob15x15-3.txt");
+		pruebaUnProblema("prob15x15-4.txt");
+		pruebaUnProblema("prob15x15-5.txt");
+		pruebaUnProblema("prob15x15-6.txt");
+		pruebaUnProblema("prob15x15-7.txt");
+		pruebaUnProblema("prob15x15-8.txt");
+		pruebaUnProblema("prob15x15-9.txt");
 		
-		// OPCION 2: Probar todas las busquedas con un conjunto de problemas y recopilar resultados relevantes
-		// TODO esto hay que hacerlo (la alternativa es ir lanzando uno a uno y hacer corta/pega muchas veces)
 	}
 	
 	
@@ -43,6 +69,7 @@ public class Tester {
 		// Creamos heuristicos
 		Heuristico<EstadoGPF> h0 = new Heuristico<EstadoGPF>();
 		Heuristico<EstadoGPF> hM = new HeuristicoGPFManhattan( p );
+		Heuristico<EstadoGPF> hN = new HeuristicoMalo( p );
 		// aqui podria aniadirse el heuristico malo a programar
 		
 		// Lanzamos diversas busquedas
@@ -62,6 +89,13 @@ public class Tester {
 		List<Nodo<EstadoGPF,AccionGPF>> solAStarM = bAStarM.busqueda();
 		muestraSol( solAStarM, bAStarM, p );
 		
+		// BUSQUEDA A* CON NUESTRO ALGORITMO
+		//System.out.println("---------------------------");
+		//System.out.println("A* CON MANHATTAN. Deberia encontrar solucion optima");
+		Busqueda<EstadoGPF,AccionGPF> bAStarN = new BusquedaPrimeroMejor<EstadoGPF,AccionGPF>( p, Criterio.f, hN );
+		List<Nodo<EstadoGPF,AccionGPF>> solAStarN = bAStarN.busqueda();
+		muestraSol( solAStarN, bAStarN, p );
+		
 		System.out.println(nomFichProb);
 		}
 	
@@ -75,9 +109,9 @@ public class Tester {
 	 */
 	private static void muestraSol ( List<Nodo<EstadoGPF,AccionGPF>> sol, Busqueda<EstadoGPF,AccionGPF> b, Problema<EstadoGPF,AccionGPF> p ){
 		if( sol==null ) // para evitar excepciones por punteros nulos
-			System.out.println("No se ha encontrado solucion");
+			System.out.print("No se ha encontrado solucion	");
 		else 
-			System.out.print(b.nodosExplorados()+"  "+(b.nodosExplorados()+b.nodosEnFrontera())+"  "+b.costeSolucion()+"    ");		
+			System.out.print(b.nodosExplorados()+"	"+(b.nodosExplorados()+b.nodosEnFrontera())+"	"+b.costeSolucion()+"	");		
 	}
 	
 } // Numero de nodos explorados | Numero total de nodos jenerados | Coste final

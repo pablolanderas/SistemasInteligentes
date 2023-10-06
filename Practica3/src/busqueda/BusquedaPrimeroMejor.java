@@ -76,6 +76,7 @@ public class BusquedaPrimeroMejor<Estado,Accion> extends Busqueda<Estado,Accion>
 		Iterator<Nodo<Estado,Accion>> iter;
 		boolean parado;
 		for (Nodo<Estado,Accion> nodo: hijos) {
+			nodo.setH(h.calculaH(nodo.getEstado()));
 			if (explorados.get(nodo.getEstado()) == null) {
 				iter = frontera.frontera.iterator();
 				parado = false;
