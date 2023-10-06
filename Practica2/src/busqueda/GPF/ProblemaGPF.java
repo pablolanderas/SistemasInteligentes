@@ -174,14 +174,23 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	 * (non-Javadoc)
 	 * @see busqueda.Problema#acciones(busqueda.Estado)
 	 */
+
 	@Override
+	/**
+	 * Devuelve la lista con las posibles acciones que puede ejecutar la busqueda.
+	 * @param eactual, estado actual en el que se encuentra el programa.
+	 * @return lista con los posibles movimientos.
+	 */
 	public List<AccionGPF> acciones(EstadoGPF eactual) {
 		List<AccionGPF> lista = new LinkedList<AccionGPF>();
+		//creamos las acciones posibles segun su especificacion en AccionGPF.java.
 		AccionGPF up = new AccionGPF('u');
 		AccionGPF down = new AccionGPF('d');
 		AccionGPF left = new AccionGPF('l');
 		AccionGPF right = new AccionGPF('r');
+		//revisamos con if que acciones son aplicables y cuales no.
 		if (aplicable(eactual, up)) {
+			//aquellas que son aplicables son las que añadiremos a la lista.
 			lista.add(up);
 		}
 		
@@ -194,6 +203,7 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 		if (aplicable(eactual, right)) {
 			lista.add(right);
 		}
+		//una vez añadidos todos los posibles movimientos devolvemos la lista.
 		return lista;
 	}
 	
@@ -201,13 +211,22 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	 * (non-Javadoc)
 	 * @see busqueda.Problema#aplicable(Estado, Accion)
 	 */
+	/**
+	 * Devuelve si es posible realizar un movimiento desde un estado.
+	 * @param e, estado actual en el que se encuentra el problema.
+	 * @param a, accion que queremos realizar
+	 * @return True, si es posible, False en caso contrario
+	 */
 	@Override
 	public boolean aplicable(EstadoGPF e, AccionGPF a) {
 		boolean aplicable=false; // por defecto, entendemos que se puede aplicar
+		//switch para revisar el caso concreto de la accion "a".
 				switch (a.getTipo()) {
 				case 'u':
 					if(e.getY() > 0 && grid[e.getY() - 1][e.getX()] != 0) {
-						
+						/*en caso de poder realizarse cambiamos el valor de aplicable a true y
+						*terminamos el switch.
+						*/
 						aplicable = true;
 					}
 					break;
@@ -240,11 +259,22 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	 * (non-Javadoc)
 	 * @see busqueda.Problema#resul(busqueda.Estado, busqueda.Accion)
 	 */
+	/**
+	 * metodo que nos devuelve el resultado de realizar la accion.
+	 *@param e, estado actual en el que nos encontramos
+	 *@param a, accion que queremos realizar.
+	 *@return nuevo estado despus de la accion.
+	 */
 	@Override
 	public EstadoGPF resul(EstadoGPF e, AccionGPF a) {
+		//revisamos si es aplicable
 		if (aplicable(e,a)) {
+			//en caso de ser aplicable revisamos que movimiento es
 			switch (a.getTipo()) {
 			case 'u':
+				/*una vez que sabemos que movimiento es, realizamos
+				*el calculo del nuevo estado y lo devolvemos
+				*/
 				return new EstadoGPF(e.getX(), e.getY()-1);
 				
 			case 'd':
@@ -274,8 +304,16 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	 * (non-Javadoc)
 	 * @see busqueda.Problema#coste(Estado, Accion, Estado)
 	 */
+	/**
+	 *metodo que nos devuelve el coste de la accion
+	 *@param e1, estado inicial		
+	 *@param e2, estado final
+	 *@param a, accion a realizar
+	 *@return el coste de la operacion.
+	 */
 	@Override
 	public double coste(EstadoGPF e1, AccionGPF a, EstadoGPF e2) {
+		//en este caso debido al enunciado el coste es solo el valor del estado final.
 			return grid[e2.getY()][e2.getX()];
 	}
 
