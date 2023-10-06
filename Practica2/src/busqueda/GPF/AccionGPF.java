@@ -13,6 +13,10 @@ public class AccionGPF {
 	String accion;
 	char tipo;
 	
+	/**
+	 * Constructor de la clase AccionGPF
+	 * @param tipoAccion El tipo de accion que es: 'u': Arriba, 'd': Abajo, 'l': Izquierda y 'r': Derecha
+	 */
 	public AccionGPF(char tipoAccion) {
 		tipo = tipoAccion;
 		if (tipoAccion == 'u') {
@@ -37,6 +41,10 @@ public class AccionGPF {
 		return accion;
 	}
 	
+	/**
+	 * Geter del tipo
+	 * @return el tipo
+	 */
 	public char getTipo() {
 		return tipo;
 	}

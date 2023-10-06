@@ -1,12 +1,11 @@
-/**
- * Clase para Nodo de la busqueda
- */
 package busqueda;
 
 import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Clase para Nodo de la busqueda
+ * Permite guardar implicitamente el arbol de busqueda
  * @author Ines
  * @version 2022.09.*
  */
@@ -15,7 +14,9 @@ public class Nodo<Estado,Accion> {
 	private Estado estado; // estado
 	private Nodo<Estado,Accion> padre; // nodo padre
 	private Accion accion; // accion aplicada para llegar al estado desde el padre
-	private double g; // coste
+	private double g=0; // coste
+	private double h=0; // h (no se usa en busquedas no informadas)
+	private double f=0; // coste total (f=g+h)
 	
 	// constructores
 	/**
@@ -27,6 +28,7 @@ public class Nodo<Estado,Accion> {
 		setAccion(null);
 		setPadre(null);
 		setG(0,0); // g=0
+		setH(0); //
 	}
 	
 
@@ -42,6 +44,7 @@ public class Nodo<Estado,Accion> {
 		setPadre(p);
 		setAccion(a);
 		setG(p.getG(),coste);
+		setH(0); // h=0 en principio (cuesta calcularlo, hay que hacerlo solo si se necesita)
 	}
 
 	// observadores
@@ -60,7 +63,14 @@ public class Nodo<Estado,Accion> {
 	public double getG(){
 		return g;
 	}
+	public double getF() {
+		return f;
+	}
 	
+	public double getH() {
+		return h;
+	}
+
 	// modificadores
 	private void setEstado(Estado e) {
 		estado = e;
@@ -75,8 +85,18 @@ public class Nodo<Estado,Accion> {
 	
 	public void setG( double gPadre, double coste){
 		g=gPadre+coste;
+		setF();// actualizamos f=g+h
 	}
 	
+	public void setH( double valorH ){
+		h=valorH;
+		setF();//actualizamos f=g+h
+	}
+	
+	public void setF(){
+		f=g+h;
+	}
+
 	// otros
 	/**
 	 * toString()
@@ -127,12 +147,14 @@ public class Nodo<Estado,Accion> {
 	 * @return el camino desde el inicio hasta el nodo actual
 	 */
 	public List<Nodo<Estado,Accion>> caminoDesdeInicio() {
-		LinkedList<Nodo<Estado,Accion>> camino = new LinkedList<Nodo<Estado,Accion>>();
-		Nodo<Estado,Accion> nodo = this;
-		while(nodo != null) {
-			camino.addFirst(nodo);
-			nodo = nodo.padre;
+			// TODO Hay que completar este metodo para que devuelva el camino desde
+			// el inicio hasta el estado correspondiente a este nodo.
+			// PISTA: hay que "desandar" el camino hacia atras, aprovechando que siempre sabemos
+			// que nodo es el padre del actual; puede resultar util utilizar el metodo esRaiz()
+			// para saber si ya se ha llegado al inicio.
+			LinkedList<Nodo<Estado,Accion>> camino = new LinkedList<Nodo<Estado,Accion>>();
+
+			return camino;
 		}
-		return camino;
-	}
+		
 }
