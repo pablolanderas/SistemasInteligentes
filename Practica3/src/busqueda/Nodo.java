@@ -147,14 +147,13 @@ public class Nodo<Estado,Accion> {
 	 * @return el camino desde el inicio hasta el nodo actual
 	 */
 	public List<Nodo<Estado,Accion>> caminoDesdeInicio() {
-			// TODO Hay que completar este metodo para que devuelva el camino desde
-			// el inicio hasta el estado correspondiente a este nodo.
-			// PISTA: hay que "desandar" el camino hacia atras, aprovechando que siempre sabemos
-			// que nodo es el padre del actual; puede resultar util utilizar el metodo esRaiz()
-			// para saber si ya se ha llegado al inicio.
-			LinkedList<Nodo<Estado,Accion>> camino = new LinkedList<Nodo<Estado,Accion>>();
-
-			return camino;
+		LinkedList<Nodo<Estado,Accion>> camino = new LinkedList<Nodo<Estado,Accion>>();
+		Nodo<Estado,Accion> nodo = this;
+		while(nodo != null) {
+			camino.addFirst(nodo);
+			nodo = nodo.padre;
 		}
+		return camino;
+	}
 		
 }

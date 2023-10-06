@@ -1,4 +1,5 @@
-/* Accion para el problema GPF (grid pathfinding)
+/**
+ * Accion para el problema GPF (grid pathfinding)
  * Puede ser: ir a derecha|arriba|izquierda|abajo
  */
 package busqueda.GPF;
@@ -9,15 +10,42 @@ package busqueda.GPF;
  */
 public class AccionGPF {
 	
-	// TODO Hay que completar esta clase para que represente las posibles acciones aplicables en un estado del problema GPF
+	String accion;
+	char tipo;
 	
-	// ¡IMPORTANTE! Tiene que implementar el método toString() para poder imprimir la solucion
-    // (es decir, la secuencia de acciones para llegar desde el estado inicial a la meta)
-
+	/**
+	 * Constructor de la clase AccionGPF
+	 * @param tipoAccion El tipo de accion que es: 'u': Arriba, 'd': Abajo, 'l': Izquierda y 'r': Derecha
+	 */
+	public AccionGPF(char tipoAccion) {
+		tipo = tipoAccion;
+		if (tipoAccion == 'u') {
+			this.accion = "Arriba";
+		} else if (tipoAccion == 'd') {
+			this.accion = "Abajo";
+		} else if (tipoAccion == 'l') {
+			this.accion = "Izquierda";
+		} else if (tipoAccion == 'r') {
+			this.accion = "Derecha";
+		} else {
+			/* throw new Exception("Accion no valida"); 
+			 * Se deberia implementar una excepcion para los casos no esperados
+			 */
+		}
+	}	
 	
+	// ï¿½IMPORTANTE! Tiene que implementar el mï¿½todo toString() para poder imprimir la solucion
+    // (es decir, la secuencia de acciones para llegar desde el estado inicial a la meta)	
 	@Override
 	public String toString() {
-		String sa=""; // TODO cambiarlo
-		return sa;
+		return accion;
+	}
+	
+	/**
+	 * Geter del tipo
+	 * @return el tipo
+	 */
+	public char getTipo() {
+		return tipo;
 	}
 }

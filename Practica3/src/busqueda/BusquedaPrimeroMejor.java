@@ -67,19 +67,33 @@ public class BusquedaPrimeroMejor<Estado,Accion> extends Busqueda<Estado,Accion>
 	 * Metodo tratarRepetidos
 	 * Se modifica el generico para que, si encuentra un nodo "repetido" en la frontera,
 	 * en lugar de descartar el hijo (el mas nuevo), deje en la frontera el mejor de ambos nodos
-	 * (segun el criterio de comparacion)
+	 * (segun el COSTE)
 	 * @param lista de nodos hijos a tratar
 	 */
 	@Override
 	protected void tratarRepetidos(List<Nodo<Estado,Accion>> hijos){
-		// TODO Hay que completarlo (o copiarlo de la practica anterior de la clase BusquedaCosteUniforme)
-		/* INDICACIONES:
-		 * - aqui hay que recorrer la lista de sucesores (hijos) para a�adir los "interesantes" a la frontera
-		 * - para comprobar si un hijo esta en explorados, basta utilizar el metodo Map.get, recordando que la clave del mapa es el estado
-		 * - para comprobar si la frontera no contiene un nodo para el estado del hijo o s� lo contiene pero es peor (en cuyo caso, el "peor" se borra),
-		 * puede utilizarse el metodo auxiliar noRepeOPeorEnFrontera( Nodo hijo )
-		 */
-	}// fin tratarRepetidos()
+		Nodo<Estado,Accion> n;
+		Iterator<Nodo<Estado,Accion>> iter;
+		boolean parado;
+		for (Nodo<Estado,Accion> nodo: hijos) {
+			if (explorados.get(nodo.getEstado()) == null) {
+				iter = frontera.frontera.iterator();
+				parado = false;
+				while (iter.hasNext() && !parado) {
+					n = iter.next();
+					if (n.getEstado().equals(nodo.getEstado())) {
+						if (nodo.getG() < n.getG()) {
+							frontera.frontera.remove(n);
+							frontera.aniade(nodo);
+						}
+						parado = true;
+					}
+				}
+				if (!parado) frontera.aniade(nodo);
+			}
+		}
+		
+	}
 	
 
 }
