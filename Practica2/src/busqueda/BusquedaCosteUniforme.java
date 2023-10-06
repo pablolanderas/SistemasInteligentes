@@ -33,13 +33,6 @@ public class BusquedaCosteUniforme<Estado,Accion> extends Busqueda<Estado,Accion
 	 */
 	@Override
 	protected void tratarRepetidos(List<Nodo<Estado,Accion>> hijos){
-		/* INDICACIONES:
-		 * - aqui hay que recorrer la lista de hijos para anadir los "interesantes" a la frontera
-		 * - para comprobar si un hijo esta en explorados, basta utilizar el metodo Map.get, recordando que la clave del mapa es el estado
-		 * - para comprobar si la frontera no contiene un nodo para el estado del hijo o si lo contiene pero es peor (en cuyo caso, el "peor" se borra),
-		 * puede utilizarse un comparador de la clase ComparaNodos, que compara nodos en funcion del valor de Nodo.g
-		 * y puede usarse un metodo auxiliar para recorrer la frontera si se estima oportuno
-		 */
 		Nodo<Estado,Accion> n;
 		Iterator<Nodo<Estado,Accion>> iter;
 		boolean parado;
@@ -61,7 +54,7 @@ public class BusquedaCosteUniforme<Estado,Accion> extends Busqueda<Estado,Accion
 			}
 		}
 		
-	}// fin tratarRepetidos()
+	}
 	
 
 }
