@@ -382,7 +382,7 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	 * Metodo "chapuza" para mostrar el problema por pantalla
 	 */
 	public void muestraProblema(){
-		System.out.println("NUMERO DE FILAS");
+		/*System.out.println("NUMERO DE FILAS");
 		System.out.println(this.getGridNFilas());
 		System.out.println("NUMERO DE COLUMNAS");
 		System.out.println(this.getGridNCols());
@@ -395,7 +395,7 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 			for( int j=0; j<getGridNCols(); j++ )
 				System.out.print( grid[i][j]+" " );
 			System.out.println();
-		}
+		}*/
 	}
 
 	public void escribeEnFichero(String nomFichProb) throws IOException {
