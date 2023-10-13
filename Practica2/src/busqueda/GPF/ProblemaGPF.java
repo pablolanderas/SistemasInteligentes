@@ -24,8 +24,8 @@ import busqueda.Problema;
 public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	// atributos
 	private int[][] grid; // cuadricula
-	private int gridNFilas; // dimensiones cuadricula
-	private int gridNCols;
+	private int gridNFilas; //y
+	private int gridNCols; //x
 	private EstadoGPF inicio; // estado inicial
 	private EstadoGPF meta; // estado final
 
@@ -222,8 +222,8 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 		boolean aplicable=false; // por defecto, entendemos que se puede aplicar
 		//switch para revisar el caso concreto de la accion "a".
 				switch (a.getTipo()) {
-				case 'u':
-					if(e.getY() > 0 && grid[e.getY() - 1][e.getX()] != 0) {
+				case 'l':
+					if(e.getY() > 0 && grid[e.getX()][e.getY() - 1] != 0) {
 						/*en caso de poder realizarse cambiamos el valor de aplicable a true y
 						*terminamos el switch.
 						*/
@@ -231,20 +231,20 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 					}
 					break;
 					
-				case 'd':
-					if(e.getY() < gridNFilas-1 && grid[e.getY() + 1][e.getX()] != 0) {
-						aplicable = true;
-					}
-					break;
-					
-				case 'l':
-					if(e.getX() > 0 && grid[e.getY()][e.getX() - 1] != 0 ) {
-						aplicable = true;
-					}
-					break;
-					
 				case 'r':
-					if(e.getX() < gridNCols -1 && grid[e.getY()][e.getX() + 1] != 0 ) {
+					if(e.getY() < gridNCols-1 && grid[e.getX()][e.getY() + 1] != 0) {
+						aplicable = true;
+					}
+					break;
+					
+				case 'u':
+					if(e.getX() > 0 && grid[e.getX() - 1][e.getY()] != 0 ) {
+						aplicable = true;
+					}
+					break;
+					
+				case 'd':
+					if(e.getX() < gridNFilas -1 && grid[e.getX()+1][e.getY()] != 0 ) {
 						aplicable = true;
 					}
 					break;
@@ -271,19 +271,19 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 		if (aplicable(e,a)) {
 			//en caso de ser aplicable revisamos que movimiento es
 			switch (a.getTipo()) {
-			case 'u':
+			case 'l':
 				/*una vez que sabemos que movimiento es, realizamos
 				*el calculo del nuevo estado y lo devolvemos
 				*/
 				return new EstadoGPF(e.getX(), e.getY()-1);
 				
-			case 'd':
+			case 'r':
 				return new EstadoGPF(e.getX(), e.getY()+1);
 				
-			case 'l':
+			case 'u':
 				return new EstadoGPF(e.getX()-1, e.getY());
 				
-			case 'r':
+			case 'd':
 				return new EstadoGPF(e.getX()+1, e.getY());
 			
 		
@@ -314,7 +314,7 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	@Override
 	public double coste(EstadoGPF e1, AccionGPF a, EstadoGPF e2) {
 		//en este caso debido al enunciado el coste es solo el valor del estado final.
-			return grid[e2.getY()][e2.getX()];
+			return grid[e2.getX()][e2.getY()];
 	}
 
 
@@ -382,7 +382,7 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 	 * Metodo "chapuza" para mostrar el problema por pantalla
 	 */
 	public void muestraProblema(){
-		System.out.println("NUMERO DE FILAS");
+		/*System.out.println("NUMERO DE FILAS");
 		System.out.println(this.getGridNFilas());
 		System.out.println("NUMERO DE COLUMNAS");
 		System.out.println(this.getGridNCols());
@@ -395,7 +395,7 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 			for( int j=0; j<getGridNCols(); j++ )
 				System.out.print( grid[i][j]+" " );
 			System.out.println();
-		}
+		}*/
 	}
 
 	public void escribeEnFichero(String nomFichProb) throws IOException {
