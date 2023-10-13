@@ -17,7 +17,7 @@ import busqueda.Heuristico;
 import busqueda.Nodo;
 import busqueda.Problema;
 
-public class Tester2 {
+public class Tester {
 
 
 	public static void main( String[] argv) {
