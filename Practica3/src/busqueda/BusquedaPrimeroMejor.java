@@ -84,7 +84,7 @@ public class BusquedaPrimeroMejor<Estado,Accion> extends Busqueda<Estado,Accion>
 					n = iter.next();
 					if (n.getEstado().equals(nodo.getEstado())) {
 						if (nodo.getG() < n.getG()) {
-							frontera.frontera.remove(n);
+							iter.remove();
 							frontera.aniade(nodo);
 						}
 						parado = true;

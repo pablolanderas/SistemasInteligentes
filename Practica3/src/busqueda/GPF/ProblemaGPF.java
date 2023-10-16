@@ -319,7 +319,7 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 
 
 	// METODOS PRIVADOS (LOS QUE HACEN "EL TRABAJO SUCIO")
-	
+
 	
 	/**
 	 * Lee el problema de un fichero con formato determinado como sigue
