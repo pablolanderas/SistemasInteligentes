@@ -81,9 +81,12 @@ public class Tester {
 		// BUSQUEDA PRIMERO EL MEJOR VORAZ CON HEURISTICO MANHATTAN
 		//System.out.println("---------------------------");
 		//System.out.println("1o MEJOR VORAZ CON MANHATTAN. ");
+<<<<<<< HEAD
 		Busqueda<EstadoGPF,AccionGPF> bCU = new BusquedaPrimeroMejor<EstadoGPF,AccionGPF>( p );
 		List<Nodo<EstadoGPF,AccionGPF>> solCU = bCU.busqueda();
 		muestraSol( solCU, bCU, p );
+=======
+>>>>>>> 98f90e941990e1fc4b74d1a4812f4a30228c143c
 		
 		// BUSQUEDA A* CON HEURISTICO MANHATTAN
 		//System.out.println("---------------------------");
@@ -101,7 +104,6 @@ public class Tester {
 		
 		System.out.println();
 		}
-	
 		
 
 	/**

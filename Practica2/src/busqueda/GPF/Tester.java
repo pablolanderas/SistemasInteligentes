@@ -22,8 +22,8 @@ public class Tester {
 	public static void main( String[] args) {
 
 		// Para probar todas las busquedas con un problema concreto (que se pasa como argumento al ejecutable)
-		String nomFichProb = args[0];
-		pruebaUnProblema(nomFichProb); 
+		//String nomFichProb = args[0];
+		pruebaUnProblema("prob10x10-5.txt"); 
 		
 	}
 	
