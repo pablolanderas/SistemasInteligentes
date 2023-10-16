@@ -56,7 +56,7 @@ public class BusquedaPrimeroMejor<Estado,Accion> extends Busqueda<Estado,Accion>
 	protected void inicia(){
 		frontera.clear();
 		Nodo<Estado,Accion> inicial = new Nodo<Estado,Accion>( prob.getInicio());
-		// al crear el nodo no se calcula h, hay que hacerlo explicitamente
+		// al crear el nodo no se calcula h, hay que hacerlo explicitament
 		inicial.setH(h.calculaH(inicial.getEstado()));
 		frontera.aniade(inicial);
 		explorados.clear();

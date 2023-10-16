@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import busqueda.Busqueda;
+import busqueda.BusquedaCosteUniforme;
 import busqueda.BusquedaPrimeroAnchura;
 import busqueda.BusquedaPrimeroMejor;
 import busqueda.BusquedaPrimeroProf;
@@ -35,10 +36,10 @@ public class Tester {
 		pruebaUnProblema("prob10x10-9.txt");
 		pruebaUnProblema("prob10x15-0.txt");
 		pruebaUnProblema("prob10x15-1.txt");
-		pruebaUnProblema("prob10x15-2.txt");
+		//pruebaUnProblema("prob10x15-2.txt");
 		pruebaUnProblema("prob10x15-3.txt");
 		pruebaUnProblema("prob10x15-4.txt");
-		pruebaUnProblema("prob10x15-5.txt");
+		//pruebaUnProblema("prob10x15-5.txt");
 		pruebaUnProblema("prob10x15-6.txt");
 		pruebaUnProblema("prob10x15-7.txt");
 		pruebaUnProblema("prob10x15-8.txt");
@@ -75,12 +76,14 @@ public class Tester {
 		// Lanzamos diversas busquedas
 		// se puede comentar o descomentar segun la búsqueda que quiera lanzarse
 		
+		System.out.print(nomFichProb + "	");
+		
 		// BUSQUEDA PRIMERO EL MEJOR VORAZ CON HEURISTICO MANHATTAN
 		//System.out.println("---------------------------");
 		//System.out.println("1o MEJOR VORAZ CON MANHATTAN. ");
-		Busqueda<EstadoGPF,AccionGPF> bGBFM = new BusquedaPrimeroMejor<EstadoGPF,AccionGPF>( p, Criterio.h, hM );
-		List<Nodo<EstadoGPF,AccionGPF>> solGBFM = bGBFM.busqueda();
-		muestraSol( solGBFM, bGBFM, p );
+		Busqueda<EstadoGPF,AccionGPF> bCU = new BusquedaPrimeroMejor<EstadoGPF,AccionGPF>( p );
+		List<Nodo<EstadoGPF,AccionGPF>> solCU = bCU.busqueda();
+		muestraSol( solCU, bCU, p );
 		
 		// BUSQUEDA A* CON HEURISTICO MANHATTAN
 		//System.out.println("---------------------------");
@@ -96,7 +99,7 @@ public class Tester {
 		List<Nodo<EstadoGPF,AccionGPF>> solAStarN = bAStarN.busqueda();
 		muestraSol( solAStarN, bAStarN, p );
 		
-		System.out.println(nomFichProb);
+		System.out.println();
 		}
 	
 		
@@ -109,7 +112,7 @@ public class Tester {
 	 */
 	private static void muestraSol ( List<Nodo<EstadoGPF,AccionGPF>> sol, Busqueda<EstadoGPF,AccionGPF> b, Problema<EstadoGPF,AccionGPF> p ){
 		if( sol==null ) // para evitar excepciones por punteros nulos
-			System.out.print("No se ha encontrado solucion	");
+			System.out.print("No se ha encontrado solucion		");
 		else 
 			System.out.print(b.nodosExplorados()+"	"+(b.nodosExplorados()+b.nodosEnFrontera())+"	"+b.costeSolucion()+"	");		
 	}

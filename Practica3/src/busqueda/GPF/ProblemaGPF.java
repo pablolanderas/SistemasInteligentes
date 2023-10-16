@@ -190,7 +190,6 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 		AccionGPF right = new AccionGPF('r');
 		//revisamos con if que acciones son aplicables y cuales no.
 		if (aplicable(eactual, up)) {
-			//aquellas que son aplicables son las que añadiremos a la lista.
 			lista.add(up);
 		}
 		
@@ -203,6 +202,7 @@ public class ProblemaGPF extends Problema<EstadoGPF,AccionGPF> {
 		if (aplicable(eactual, right)) {
 			lista.add(right);
 		}
+		
 		//una vez añadidos todos los posibles movimientos devolvemos la lista.
 		return lista;
 	}
