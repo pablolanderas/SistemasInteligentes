@@ -84,9 +84,9 @@ public class Tester {
 <<<<<<< HEAD
 		Busqueda<EstadoGPF,AccionGPF> bCU = new BusquedaPrimeroMejor<EstadoGPF,AccionGPF>( p );
 		List<Nodo<EstadoGPF,AccionGPF>> solCU = bCU.busqueda();
-		muestraSol( solCU, bCU, p );
-=======
->>>>>>> 98f90e941990e1fc4b74d1a4812f4a30228c143c
+		Busqueda<EstadoGPF,AccionGPF> bGBFM = new BusquedaPrimeroMejor<EstadoGPF,AccionGPF>( p, Criterio.h, h0 );
+		List<Nodo<EstadoGPF,AccionGPF>> solGBFM = bGBFM.busqueda();
+		muestraSol( solGBFM, bGBFM, p );
 		
 		// BUSQUEDA A* CON HEURISTICO MANHATTAN
 		//System.out.println("---------------------------");
@@ -104,6 +104,7 @@ public class Tester {
 		
 		System.out.println();
 		}
+
 		
 
 	/**
