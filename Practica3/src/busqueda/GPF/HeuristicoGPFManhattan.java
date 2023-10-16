@@ -35,6 +35,6 @@ public class HeuristicoGPFManhattan extends Heuristico<EstadoGPF> {
 	@Override
 	public double calculaH(EstadoGPF e){
 		return Math.abs(meta.getX() - e.getX()) + Math.abs(meta.getY() - e.getY());
-		}
+	}
 
 }

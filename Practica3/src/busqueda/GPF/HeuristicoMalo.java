@@ -26,6 +26,7 @@ public class HeuristicoMalo extends HeuristicoGPFManhattan{
 		}
 		return mayor;
 	}
+	
 	/**
 	 * Heuristico Manhattan
 	 * @param un Estado e (del problema de grid pathfinding)
