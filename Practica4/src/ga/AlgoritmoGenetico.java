@@ -3,6 +3,7 @@ package ga;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.math.*;
 
 /** Clase AlgoritmoGenetico
  * <pre>
@@ -33,6 +34,8 @@ public class AlgoritmoGenetico<A> {
 	protected Individuo<A> cromosomaSol;	// cromosoma correspondiente al mejor individuo encontrado
 	protected int iterations;				// iteraciones del algoritmo (generaciones)
 	protected long timeInMSec;				// tiempo consumido por el algoritmo
+	private ArrayList<Double> FitnessBest = new ArrayList<Double>(); //Traza mejores fitness.
+	private ArrayList<Double> FitnessAverage = new ArrayList<Double>(); //Traza media fitness
 	
 	// CONSTRUCTOR
 	public AlgoritmoGenetico(int individualLength, Collection<A> finiteAlphabet, 
@@ -66,9 +69,34 @@ public class AlgoritmoGenetico<A> {
 	 */
 	public Individuo<A> lanzaGA( OpGeneracion<A> opG, final int maxIterations, 
 			OpCruce<A> opCross, OpMutacion<A> opM, OpSeleccion<A> opSel, OpDecodificacion<A> opDecod, OpReemplazo<A> opReemp) {
-		// TODO
-		// aqui, en lugar de return null, hay que poner el codigo del GA utilizando los operadores que nos han pasado como parametros
-		return null;
+		
+		
+		List<Individuo<A>> pob = generateInitPopulation(opG, popSize);
+		FitnessAverage.add(updateFitness(pob, opDecod));
+		FitnessBest.add(retrieveBestIndividual(pob).getFitness());
+		Individuo<A> hijo;
+		for(int nGen = 0; nGen > maxIterations; nGen++ ) {
+			List<Individuo<A>> nPob = new ArrayList<Individuo<A>>();
+			
+			for(int i = 0; i < pob.size(); i++) {
+				Individuo<A> x = opSel.apply(pob);
+				Individuo<A> y = opSel.apply(pob);
+				if(Math.random() < crossoverProbability) {
+					hijo = opCross.apply(1, x, y).get(0);
+				} else {
+					hijo = x;
+				} 
+				if(Math.random() < mutationProbability) {
+					hijo = opM.apply(hijo);
+				}
+				nPob.add(hijo);
+			}
+			
+			FitnessAverage.add(updateFitness(nPob, opDecod));
+			FitnessBest.add(retrieveBestIndividual(nPob).getFitness());
+			pob = opReemp.apply(pob, nPob);
+		}
+		return retrieveBestIndividual(pob);
 	}
 	
 
