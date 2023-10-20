@@ -60,7 +60,7 @@ public class TesterTSP {
 			}
 			if (mostrarMejor) {
 				System.out.print("Mejor: ");
-				for (double val : ga.obtenAverageFitnes()) System.out.print(val + "	");
+				for (double val : ga.obtenBestFitnes()) System.out.print(val + "	");
 				System.out.print("\n");
 			}
 		}

@@ -93,10 +93,10 @@ public class AlgoritmoGenetico<A> {
 				}
 				nPob.add(hijo);
 			}
-			
-			FitnessAverage.add(updateFitness(nPob, opDecod));
-			FitnessBest.add(retrieveBestIndividual(nPob).getFitness());
+
 			pob = opReemp.apply(pob, nPob);
+			FitnessAverage.add(updateFitness(pob, opDecod));
+			FitnessBest.add(retrieveBestIndividual(pob).getFitness());
 		}
 		return retrieveBestIndividual(pob);
 	}
