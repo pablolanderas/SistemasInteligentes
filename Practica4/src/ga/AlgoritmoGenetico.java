@@ -75,7 +75,9 @@ public class AlgoritmoGenetico<A> {
 		FitnessAverage.add(updateFitness(pob, opDecod));
 		FitnessBest.add(retrieveBestIndividual(pob).getFitness());
 		Individuo<A> hijo;
-		for(int nGen = 0; nGen > maxIterations; nGen++ ) {
+		for(int nGen = 0; nGen < maxIterations; nGen++ ) {
+			
+			//System.out.println("PASA POR EL BUCLE");
 			List<Individuo<A>> nPob = new ArrayList<Individuo<A>>();
 			
 			for(int i = 0; i < pob.size(); i++) {
@@ -218,6 +220,14 @@ public class AlgoritmoGenetico<A> {
 		popSize = population.size();
 		iterations = itCount;
 		timeInMSec= time;
+	}
+	
+	public ArrayList<Double> obtenBestFitnes() { 
+		return FitnessBest;
+	}
+	
+	public ArrayList<Double> obtenAverageFitnes() { 
+		return FitnessAverage;
 	}
 
 	

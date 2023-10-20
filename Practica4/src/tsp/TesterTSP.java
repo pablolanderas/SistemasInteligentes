@@ -36,14 +36,34 @@ public class TesterTSP {
 		int tamPob = 10000; // tamanio poblacion
 		
 		// ALGORITMO GENETICO
-		AlgoritmoGenetico<Integer> ga =
-				new AlgoritmoGenetico<Integer>(prob.getNumCiudades(), prob.getAlfabeto(), pc, pm, tamPob);
-		Individuo<Integer> cromoSol = 
-				ga.lanzaGA(opGen, maxIter, opCruce, opMut, opSel,opDecod,opReemp);
-		Solucion solucion = opDecod.apply(cromoSol);
-		System.out.println("Solucion final: \n" + solucion);
-		System.out.println("Coste: " + ((SolucionTSP)solucion).getCoste());
+		int numEjecuciones = 1;
+		boolean mostrarIndice = false;
+		boolean mostrarSolucion = false;
+		boolean mostrarCoste = false;
+		boolean mostrarMedia = true;
+		boolean mostrarMejor = true;
 		
+		for (int i = 0; i< numEjecuciones; i++) {
+			AlgoritmoGenetico<Integer> ga =
+					new AlgoritmoGenetico<Integer>(prob.getNumCiudades(), prob.getAlfabeto(), pc, pm, tamPob);
+			Individuo<Integer> cromoSol = 
+					ga.lanzaGA(opGen, maxIter, opCruce, opMut, opSel,opDecod,opReemp);
+			Solucion solucion = opDecod.apply(cromoSol);
+			
+			if (mostrarIndice) System.out.println("-"+(i+1)+":" );
+			if (mostrarSolucion) System.out.println("Solucion: " + solucion);
+			if (mostrarCoste) System.out.println("Coste: " + ((SolucionTSP)solucion).getCoste());
+			if (mostrarMedia) {
+				System.out.print("Media: ");
+				for (double val : ga.obtenAverageFitnes()) System.out.print(val + "	");
+				System.out.print("\n");
+			}
+			if (mostrarMejor) {
+				System.out.print("Mejor: ");
+				for (double val : ga.obtenAverageFitnes()) System.out.print(val + "	");
+				System.out.print("\n");
+			}
+		}
 	}
 
 }
