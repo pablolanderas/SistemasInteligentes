@@ -30,16 +30,16 @@ public class TesterTSP {
 		// operador de reemplazo
 		OpReemplazo<Integer> opReemp = new OpReempGenElitista<Integer>();
 		// PARAMETROS
-		int maxIter = 1000; // criterio de parada
-		double pc = 0.9; // prob cruce
-		double pm = 0.4; // prob mutacion
-		int tamPob = 10000; // tamanio poblacion
+		int maxIter = 1000; // criterio de parada norm: 1000
+		double pc = 0.9; // prob cruce norm = 0.9
+		double pm = 0.8; // prob mutacion nomr = 0.4
+		int tamPob = 10000; // tamanio poblacion norm = 10000
 		
 		// ALGORITMO GENETICO
 		int numEjecuciones = 1;
 		boolean mostrarIndice = false;
 		boolean mostrarSolucion = false;
-		boolean mostrarCoste = false;
+		boolean mostrarCoste = true;
 		boolean mostrarMedia = true;
 		boolean mostrarMejor = true;
 		
@@ -51,8 +51,8 @@ public class TesterTSP {
 			Solucion solucion = opDecod.apply(cromoSol);
 			
 			if (mostrarIndice) System.out.println("-"+(i+1)+":" );
-			if (mostrarSolucion) System.out.println("Solucion: " + solucion);
-			if (mostrarCoste) System.out.println("Coste: " + ((SolucionTSP)solucion).getCoste());
+			if (mostrarSolucion) System.out.println("Solucion:	" + solucion);
+			if (mostrarCoste) System.out.println("Coste:	" + ((SolucionTSP)solucion).getCoste());
 			if (mostrarMedia) {
 				System.out.print("Media: ");
 				for (double val : ga.obtenAverageFitnes()) System.out.print(val + "	");
