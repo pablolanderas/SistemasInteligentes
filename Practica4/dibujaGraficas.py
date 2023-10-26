@@ -1,14 +1,10 @@
 import matplotlib.pyplot as plt
 
-LINEAS_DATOS = [3,4,8,9,13,18,19,23,24,28,29,33,34]
-NOMBRE_DATOS = ["Datos nomrales - Media", "Datos normales - Maximo",
-                "Iteracciones bajas (200) - Media", "Iteracciones bajas (200) - Maximo",
-                "Iteracciones altas (5000) - Media",
-                "Cruce alto (siempre cruza) - Media", "Cruce alto (siempre cruza) - Maximo",
-                "Cruce bajo (20%) - Media", "Cruce bajo (20%) - Maximo",
-                "Mutacion baja (10%) - Media", "Mutacion baja (10%) - Maximo",
-                "Mutacion alta (80%) - Media", "Mutacion alta (80%) - Maximo"]
-MOSTRAR_GRAFICAS = False
+LINEAS_DATOS = [38,39,43,44]
+NOMBRE_DATOS = ["Cruce en 2 puntos - Media", "Cruce en 2 puntos - Maximo",
+                "Operacion de reemplazo generacional (20%) - Media", 
+                "Operacion de reemplazo generacional (20%) - Maximo",]
+MOSTRAR_GRAFICAS = True
 GUARDAR_GRAFICAS = True
 
 def comprobarNumero(num):

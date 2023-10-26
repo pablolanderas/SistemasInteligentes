@@ -18,7 +18,7 @@ public class TesterTSP {
 		// operador para generar cromosomas aleatorios
 		OpGeneracion<Integer> opGen = new OpGenRandNoRep<Integer>( prob.getAlfabeto(), prob.getNumCiudades() );
 		// operador de cruce: (des)comentar segun el que se quiera usar
-		OpCruce<Integer> opCruce = new OpCruce2PuntosNoRep<Integer>();
+		OpCruce<Integer> opCruce = new OpCruce1PuntoNoRep<Integer>();
 		//OpCruce<Integer> opCruce = new OpCruce2PuntosNoRep<Integer>();
 		// operador de mutacion
 		OpMutacion<Integer> opMut = new OpMutacionSwap<Integer>();

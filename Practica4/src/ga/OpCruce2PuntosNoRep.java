@@ -31,10 +31,6 @@ public class OpCruce2PuntosNoRep<A> extends OpCruce<A> {
 			c1 = c2;
 			c2 = t;
 		}
-		System.out.println("----------");
-		System.out.println(c1);
-		System.out.println(c2);
-		System.out.println(parent1.length());
 		children.add(cross2(c1,c2,parent1,parent2));
 		/*if( nchildren == 2 ) {
 			children.add(1, cross2(c,parent2,parent1)); // exchange parent roles to produce 2nd child
@@ -67,8 +63,8 @@ public class OpCruce2PuntosNoRep<A> extends OpCruce<A> {
 				if (k == c1) k = c2;
 				for (int i = 0; i<yChromosome.size(); i++) { // traverse y
 					if (!mapa.containsKey(yChromosome.get(i))) {
-						childChromosome.set(k, yChromosome.get(k));
-						mapa.put(yChromosome.get(k), k);
+						childChromosome.set(k, yChromosome.get(i));
+						mapa.put(yChromosome.get(i), k);
 						k++;
 						if (k == c1) k = c2;
 					}
@@ -77,6 +73,4 @@ public class OpCruce2PuntosNoRep<A> extends OpCruce<A> {
 				return child;
 	}
 	
-
-
 }
