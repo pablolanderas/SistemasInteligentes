@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 
-LINEAS_DATOS = [3,4,8,9,13,14,18,19,23,24,28,29,33,34]
+LINEAS_DATOS = [3,4,8,9,13,18,19,23,24,28,29,33,34]
 NOMBRE_DATOS = ["Datos nomrales - Media", "Datos normales - Maximo",
                 "Iteracciones bajas (200) - Media", "Iteracciones bajas (200) - Maximo",
-                "Iteraciones altas (5000): - Media", "Iteraciones altas (5000): - Maximo",
+                "Iteracciones altas (5000) - Media",
                 "Cruce alto (siempre cruza) - Media", "Cruce alto (siempre cruza) - Maximo",
                 "Cruce bajo (20%) - Media", "Cruce bajo (20%) - Maximo",
                 "Mutacion baja (10%) - Media", "Mutacion baja (10%) - Maximo",
@@ -33,8 +33,8 @@ def main():
                 fig, ax = plt.subplots()
                 ax.plot(range(1, len(data)+1), data)
                 plt.title(NOMBRE_DATOS[dats.index(i)])
-                plt.savefig(NOMBRE_DATOS[dats.index(i)] + ".jpg", bbox_inches='tight')
-                plt.show()
+                if GUARDAR_GRAFICAS: plt.savefig(NOMBRE_DATOS[dats.index(i)] + ".jpg", bbox_inches='tight')
+                if MOSTRAR_GRAFICAS: plt.show()
 
 
 if __name__ == "__main__":

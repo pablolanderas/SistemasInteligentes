@@ -2,6 +2,8 @@ package ga;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Clase OpCruce2PuntosNoRep
@@ -20,7 +22,7 @@ public class OpCruce2PuntosNoRep<A> extends OpCruce<A> {
 	public List<Individuo<A>> apply(int nchildren, Individuo<A> parent1, Individuo<A> parent2) {
 		
 		assert(nchildren>0 && nchildren<=2); // can generate 1 or 2 children
-		List<Individuo<A>> children = new ArrayList<Individuo<A>>(nchildren); // list of children
+		List<Individuo<A>> children = new ArrayList<Individuo<A>>(); // list of children
 		int c1 = Util.randomInt(parent1.length()); // crossover point
 		int c2 = c1;
 		while (c2 == c1) c2 = Util.randomInt(parent1.length()); // crossover point
@@ -29,7 +31,11 @@ public class OpCruce2PuntosNoRep<A> extends OpCruce<A> {
 			c1 = c2;
 			c2 = t;
 		}
-		children.add(0, cross2(c1,c2,parent1,parent2));
+		System.out.println("----------");
+		System.out.println(c1);
+		System.out.println(c2);
+		System.out.println(parent1.length());
+		children.add(cross2(c1,c2,parent1,parent2));
 		/*if( nchildren == 2 ) {
 			children.add(1, cross2(c,parent2,parent1)); // exchange parent roles to produce 2nd child
 		}*/		
@@ -47,15 +53,22 @@ public class OpCruce2PuntosNoRep<A> extends OpCruce<A> {
 				// c <- random number from 1 to n
 				List<A> xChromosome = x.getRepresentation(); // chromosome x
 				List<A> yChromosome = y.getRepresentation(); // chromosome y
-				List<A> childChromosome = new ArrayList<A>(x.length()); // child chromosome
+				List<A> childChromosome = new ArrayList<A>(); // child chromosome
+				Map<A, Integer> mapa = new HashMap<A, Integer>();
 				// The first substring from the first parent, order and position
 				int k;
-				for (k= c1; k<c2; k++) childChromosome.add(k, xChromosome.get(k));
+				for (k=0; k<xChromosome.size(); k++) childChromosome.add(null);
+				for (k= c1; k<c2; k++) { 
+					childChromosome.set(k, xChromosome.get(k));
+					mapa.put(xChromosome.get(k), k);
+				}
 				// The remaining genes from the second parent, relative order
 				k = 0;
-				for (int i = 0; i<y.length(); i++) { // traverse y
-					if (!childChromosome.contains(yChromosome.get(i))) {
-						childChromosome.add(k, yChromosome.get(k));
+				if (k == c1) k = c2;
+				for (int i = 0; i<yChromosome.size(); i++) { // traverse y
+					if (!mapa.containsKey(yChromosome.get(i))) {
+						childChromosome.set(k, yChromosome.get(k));
+						mapa.put(yChromosome.get(k), k);
 						k++;
 						if (k == c1) k = c2;
 					}
