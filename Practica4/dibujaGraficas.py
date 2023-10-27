@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 
 LINEAS_DATOS = [38,39,43,44]
 NOMBRE_DATOS = ["Cruce en 2 puntos - Media", "Cruce en 2 puntos - Maximo",
-                "Operacion de reemplazo generacional (20%) - Media", 
-                "Operacion de reemplazo generacional (20%) - Maximo",]
+                "Operacion de reemplazo generacional - Media", 
+                "Operacion de reemplazo generacional - Maximo",]
 MOSTRAR_GRAFICAS = True
 GUARDAR_GRAFICAS = True
 
