@@ -192,10 +192,24 @@ public class CSPSolver<V> {
 	 *         de pasarle una copia del CSP, por si hay que hacer backtracking.
 	 */
 	private Map<String, V> mac(Map<String, V> asignacion, CSP<V> csp) {
-		// TODO Completar
-		// Optativo: seleccionar la variable a asignar utilizando el heurístico MRV
+		List<String> noAsignadas = varsNoAsignadas(asignacion, csp)
+		if (noAsignadas.size() == 0) return asignacion;
+		String var = noAsignadas.get(0);
+		for (V v : csp.getDominioDe(var)) {
+			CSP<V> cspPrim = new CSP<V>(csp);
+			for (V dom : cspPrim.getDominioDe(var))
+				if (dom != v)
+					cspPrim.borraValorDeDom(var, dom);
+			Map<String, V> asignacionPrim = new HashMap<>();
+			asignacionPrim.putAll(asignacion);
+			asignacionPrim.put(var, v);
+			if (AC3(cspPrim, var)) {
+				Map<String, V> asignacionTia = mac(asignacionPrim, cspPrim);
+				if (asignacionTia != null) return asignacionTia; 
+			}
+		}
 		return null;
-	}
+	}	
 
 	// METODOS AUXILIARES
 	/**
