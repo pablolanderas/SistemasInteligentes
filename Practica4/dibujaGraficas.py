@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 
+DIR_ARCHIVO = "datosSalida.txt"
 LINEAS_DATOS = [38,39,43,44]
 NOMBRE_DATOS = ["Cruce en 2 puntos - Media", "Cruce en 2 puntos - Maximo",
                 "Operacion de reemplazo generacional - Media", 
                 "Operacion de reemplazo generacional - Maximo",]
 MOSTRAR_GRAFICAS = True
-GUARDAR_GRAFICAS = True
+GUARDAR_GRAFICAS = False
 
 def comprobarNumero(num):
     try:
@@ -20,7 +21,7 @@ def main():
         print("[ERROR]: No has puesto el mismo numero de lineas de datos que de nombres para los datos")
         return 0
     dats = list(map(lambda x:x-1, LINEAS_DATOS))
-    with open("datosSalida.txt") as file:
+    with open(DIR_ARCHIVO) as file:
         for i, text in enumerate(file):
             if i in dats:
                 data = text

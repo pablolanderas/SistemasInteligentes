@@ -5,9 +5,11 @@ package busqCSP;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -64,6 +66,51 @@ public class CSPSolver<V> {
 			return null;
 
 	}
+	
+	/**
+	 * Metodo general de AC-3 
+	 * @param lista, la lista de arcos
+	 * @return falso si se encuentra una inconsistencia, cierto en otro caso
+	 */
+	private boolean ResuelveAC3(Queue<ArcoRB<V>> lista, CSP<V> csp) {
+		ArcoRB<V> elem;
+		String orig, dest;
+		V elem1, elem2;
+		ResBin<V> operacion;
+		boolean consistente, anadirCola;
+		Iterator<V> iterOr, iterDes;
+		
+		consistente = true;
+		while (!lista.isEmpty()) {
+			elem = lista.poll();
+			// Obtenemos los datos
+			orig = elem.getOrigen(); dest =  elem.getDestino(); operacion = elem.getResBin();
+			anadirCola = false;
+			// Comprobamos si el dominio es consistente
+			iterOr = csp.getDominioDe(orig).iterator();
+			while (iterOr.hasNext()) {
+				elem1 = iterOr.next();
+				iterDes = csp.getDominioDe(dest).iterator();
+				consistente = true;
+				while(iterDes.hasNext() && consistente) {
+					elem2 = iterDes.next();
+					if (!operacion.sonConsistentes(elem1, elem2)) {
+						consistente = false;
+						anadirCola = true;
+					}
+				}
+				// Si no es consistente lo quitamos del dominio
+				if (!consistente) iterOr.remove();
+			}
+			// En caso de no ser consistente al final de la iteracion le añadimos a la cola
+			if (anadirCola) {
+				for (ArcoRB<V> iter : csp.listaArcosRest()) {
+					if (iter.getDestino().equals(dest)) lista.add(iter);
+				}
+			}
+		}
+		return true;
+	}
 
 	/**
 	 * Metodo AC-3 para todas las restricciones del CSP
@@ -72,9 +119,8 @@ public class CSPSolver<V> {
 	 * IMPORTANTE: Se inicia la lista de arcos de restriccion por comprobar 
 	 * 			   a TODOS los arcos/restricciones del problema
 	 */
-	private boolean AC3( CSP<V> csp ){
-		// TODO Completar
-		return false;
+	private boolean AC3( CSP<V> csp ) {
+		return ResuelveAC3(csp.listaArcosRest(), csp);
 	}
 
 	
@@ -86,7 +132,7 @@ public class CSPSolver<V> {
 	 * IMPORTANTE: Se inicia la lista de arcos de restriccion por comprobar 
 	 * 			   a los arcos con origen la variable var
 	 */
-	private boolean AC3 ( CSP<V> csp, String var ){
+	private boolean AC3 ( CSP<V> csp, String var ) {
 		// TODO Completar
 		return false;
 	}
