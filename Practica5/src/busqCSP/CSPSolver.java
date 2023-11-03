@@ -76,7 +76,6 @@ public class CSPSolver<V> {
 		ArcoRB<V> elem;
 		String orig, dest;
 		V elem1, elem2;
-		ResBin<V> operacion;
 		boolean consistente, anadirCola;
 		Iterator<V> iterOr, iterDes;
 		
@@ -84,34 +83,15 @@ public class CSPSolver<V> {
 		while (!lista.isEmpty()) {
 			elem = lista.poll();
 			// Obtenemos los datos
-			orig = elem.getOrigen(); dest =  elem.getDestino(); operacion = elem.getResBin();	
-
-			/*anadirCola = false;
-			// Comprobamos si el dominio es consistente
-			iterOr = csp.getDominioDe(orig).iterator();
-			while (iterOr.hasNext()) {
-				elem1 = iterOr.next();
-				iterDes = csp.getDominioDe(dest).iterator();
-				consistente = true;
-				while(iterDes.hasNext() && consistente) {
-					elem2 = iterDes.next();
-					if (!operacion.sonConsistentes(elem1, elem2)) {
-						consistente = false;
-						anadirCola = true;
-					}
-				}
-				// Si no es consistente lo quitamos del dominio
-				if (!consistente) iterOr.remove();
-			}*/
+			orig = elem.getOrigen(); dest =  elem.getDestino();
 			
 			// En caso de no ser consistente al final de la iteracion le añadimos a la cola
 			if (revisar(csp, elem)) {
-				for (ArcoRB<V> iter : csp.listaArcosRest()) {
-					if (iter.getDestino().equals(dest)) lista.add(iter);
-				}
+				// En caso de haber vaciado el dominio, devolver que no hay solucion
+				if (csp.getDominioDe(orig).size() == 0) return false;
+				lista.addAll(csp.arcosIncidentesEn(orig));
 			}
-			// En caso de haber vaciado el dominio, devolver que no hay solucion
-			if (csp.getDominioDe(orig).size() == 0) return false;
+			
 		}
 		return true;
 	}
@@ -157,10 +137,9 @@ public class CSPSolver<V> {
 		Iterator<V> iterOr, iterDes;
 		String orig, dest;
 		V elem1, elem2;
-		ResBin<V> operacion;
 		boolean consistente, anadirCola;
 		// Separamos los datos
-		orig = arco.getOrigen(); dest =  arco.getDestino(); operacion = arco.getResBin();
+		orig = arco.getOrigen(); dest = arco.getDestino(); 
 		
 		// Comprobamos si el dominio es consistente
 		anadirCola = false;
@@ -168,16 +147,19 @@ public class CSPSolver<V> {
 		while (iterOr.hasNext()) {
 			elem1 = iterOr.next();
 			iterDes = csp.getDominioDe(dest).iterator();
-			consistente = true;
-			while(iterDes.hasNext() && consistente) {
+			consistente = false;
+			while(iterDes.hasNext() && !consistente) {
 				elem2 = iterDes.next();
-				if (!operacion.sonConsistentes(elem1, elem2)) {
-					consistente = false;
-					anadirCola = true;
+				if (arco.consistentes(elem1, elem2)) {
+					consistente = true;
 				}
 			}
 			// Si no es consistente lo quitamos del dominio
-			if (!consistente) iterOr.remove();
+			if (!consistente) {
+				iterOr.remove();
+				anadirCola = true;
+			}
+			
 		}
 		return anadirCola;
 	}
@@ -192,17 +174,13 @@ public class CSPSolver<V> {
 	 *         de pasarle una copia del CSP, por si hay que hacer backtracking.
 	 */
 	private Map<String, V> mac(Map<String, V> asignacion, CSP<V> csp) {
-		List<String> noAsignadas = varsNoAsignadas(asignacion, csp)
+		List<String> noAsignadas = varsNoAsignadas(asignacion, csp);
 		if (noAsignadas.size() == 0) return asignacion;
 		String var = noAsignadas.get(0);
 		for (V v : csp.getDominioDe(var)) {
-			CSP<V> cspPrim = new CSP<V>(csp);
-			for (V dom : cspPrim.getDominioDe(var))
-				if (dom != v)
-					cspPrim.borraValorDeDom(var, dom);
-			Map<String, V> asignacionPrim = new HashMap<>();
-			asignacionPrim.putAll(asignacion);
-			asignacionPrim.put(var, v);
+			CSP<V> cspPrim = new CSP<V>(csp);			
+			Map<String, V> asignacionPrim = new HashMap<>(asignacion);
+			asignaValorA(var, v, asignacionPrim, cspPrim);
 			if (AC3(cspPrim, var)) {
 				Map<String, V> asignacionTia = mac(asignacionPrim, cspPrim);
 				if (asignacionTia != null) return asignacionTia; 
