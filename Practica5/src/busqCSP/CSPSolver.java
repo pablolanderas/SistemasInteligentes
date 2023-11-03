@@ -84,8 +84,9 @@ public class CSPSolver<V> {
 		while (!lista.isEmpty()) {
 			elem = lista.poll();
 			// Obtenemos los datos
-			orig = elem.getOrigen(); dest =  elem.getDestino(); operacion = elem.getResBin();
-			anadirCola = false;
+			orig = elem.getOrigen(); dest =  elem.getDestino(); operacion = elem.getResBin();	
+
+			/*anadirCola = false;
 			// Comprobamos si el dominio es consistente
 			iterOr = csp.getDominioDe(orig).iterator();
 			while (iterOr.hasNext()) {
@@ -101,13 +102,16 @@ public class CSPSolver<V> {
 				}
 				// Si no es consistente lo quitamos del dominio
 				if (!consistente) iterOr.remove();
-			}
+			}*/
+			
 			// En caso de no ser consistente al final de la iteracion le añadimos a la cola
-			if (anadirCola) {
+			if (revisar(csp, elem)) {
 				for (ArcoRB<V> iter : csp.listaArcosRest()) {
 					if (iter.getDestino().equals(dest)) lista.add(iter);
 				}
 			}
+			// En caso de haber vaciado el dominio, devolver que no hay solucion
+			if (csp.getDominioDe(orig).size() == 0) return false;
 		}
 		return true;
 	}
@@ -132,10 +136,8 @@ public class CSPSolver<V> {
 	 * IMPORTANTE: Se inicia la lista de arcos de restriccion por comprobar 
 	 * 			   a los arcos con origen la variable var
 	 */
-	private boolean AC3 ( CSP<V> csp, String var ) {
-		// TODO Completar
-		
-		return false;
+	private boolean AC3 ( CSP<V> csp, String var ) {		
+		return ResuelveAC3(csp.arcosIncidentesEn(var), csp);
 	}
 	
 
@@ -152,9 +154,32 @@ public class CSPSolver<V> {
 	 *         Puede modificar el CSP (si borra valores del dominio de X)
 	 */
 	private boolean revisar(CSP<V> csp, ArcoRB<V> arco) {
-		boolean revisado = false;
-		// TODO Completar
-		return revisado;
+		Iterator<V> iterOr, iterDes;
+		String orig, dest;
+		V elem1, elem2;
+		ResBin<V> operacion;
+		boolean consistente, anadirCola;
+		// Separamos los datos
+		orig = arco.getOrigen(); dest =  arco.getDestino(); operacion = arco.getResBin();
+		
+		// Comprobamos si el dominio es consistente
+		anadirCola = false;
+		iterOr = csp.getDominioDe(orig).iterator();
+		while (iterOr.hasNext()) {
+			elem1 = iterOr.next();
+			iterDes = csp.getDominioDe(dest).iterator();
+			consistente = true;
+			while(iterDes.hasNext() && consistente) {
+				elem2 = iterDes.next();
+				if (!operacion.sonConsistentes(elem1, elem2)) {
+					consistente = false;
+					anadirCola = true;
+				}
+			}
+			// Si no es consistente lo quitamos del dominio
+			if (!consistente) iterOr.remove();
+		}
+		return anadirCola;
 	}
 
 	/**
