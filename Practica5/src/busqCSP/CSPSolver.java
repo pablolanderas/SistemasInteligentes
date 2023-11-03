@@ -34,7 +34,7 @@ public class CSPSolver<V> {
 		String autores = null;
 		// TODO cambiar la siguiente linea para que autores contenga el nombre de los
 		// alumnos del grupo
-		autores = "Nombre1 Apellidos1\n" + "Nombre2 Apellidos2\n";
+		autores = "César Cagigas\n" + "Pablo Landeras\n" + "Julio Bolado\n" + "Miguel Perez\n";
 		return autores;
 	}
 
@@ -134,6 +134,7 @@ public class CSPSolver<V> {
 	 */
 	private boolean AC3 ( CSP<V> csp, String var ) {
 		// TODO Completar
+		
 		return false;
 	}
 	
