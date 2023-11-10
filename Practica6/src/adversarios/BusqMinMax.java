@@ -22,8 +22,10 @@ public class BusqMinMax<Estado,Accion,Jugador> extends BusquedaA<Estado,Accion,J
 		super( juego );
 	}
 
-	/* (non-Javadoc)
-	 * @see adversarios.BusquedaA#decideJugada(java.lang.Object, java.lang.Object)
+	/** 
+	 * Funcion que decir cual es el movimiento mas optimo a realizar
+	 * @param e, el estado actual del juego
+	 * @return la mejor accion a realizar
 	 */
 	public Accion decideJugada( Estado e ) {
 		Jugador max = getJuego().jugador(e); // max es el jugador al que le toca mover en el estado e
@@ -41,7 +43,12 @@ public class BusqMinMax<Estado,Accion,Jugador> extends BusquedaA<Estado,Accion,J
 		return ret;
 	}
 	
-	// SERA NECESARIO INCLUIR ALGUN ME AUXILIAR PARA CALCULAR LOS VALORES MINIMAX DE LOS NODOS
+	/**
+	 * Funcion que calcula el valor maximo posible
+	 * @param e, estado actual
+	 * @param max, jugador a maximiza el estado
+	 * @return el valor
+	 */
 	private double maxValor(Estado e, Jugador max) {
 		if (juego.terminalTest(e)) 
 			return juego.utilidad(e, max);
@@ -50,7 +57,13 @@ public class BusqMinMax<Estado,Accion,Jugador> extends BusquedaA<Estado,Accion,J
 			v = Math.max(v, minValor(juego.resultado(e, a), max));
 		return v;
 	}
-		
+	
+	/**
+	 * Funcion que calcula el valor minimo posible
+	 * @param e, estado actual
+	 * @param max, jugador a minimizar el estado
+	 * @return el valor
+	 */
 	private double minValor(Estado e, Jugador max) {
 		if (juego.terminalTest(e)) 
 			return juego.utilidad(e, max);
