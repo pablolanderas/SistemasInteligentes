@@ -34,7 +34,7 @@ public class CSPSolver<V> {
 		String autores = null;
 		// TODO cambiar la siguiente linea para que autores contenga el nombre de los
 		// alumnos del grupo
-		autores = "CÃ©sar Cagigas\n" + "Pablo Landeras\n" + "Julio Bolado\n" + "Miguel Perez\n";
+		autores = "Cesar Cagigas\n" + "Pablo Landeras\n" + "Julio Bolado\n" + "Miguel Perez\n";
 		return autores;
 	}
 
@@ -74,16 +74,12 @@ public class CSPSolver<V> {
 	 */
 	private boolean ResuelveAC3(Queue<ArcoRB<V>> lista, CSP<V> csp) {
 		ArcoRB<V> elem;
-		String orig, dest;
-		V elem1, elem2;
-		boolean consistente, anadirCola;
-		Iterator<V> iterOr, iterDes;
+		String orig;
 		
-		consistente = true;
 		while (!lista.isEmpty()) {
 			elem = lista.poll();
 			// Obtenemos los datos
-			orig = elem.getOrigen(); dest =  elem.getDestino();
+			orig = elem.getOrigen();
 			
 			// En caso de no ser consistente al final de la iteracion le añadimos a la cola
 			if (revisar(csp, elem)) {
@@ -138,6 +134,7 @@ public class CSPSolver<V> {
 		String orig, dest;
 		V elem1, elem2;
 		boolean consistente, anadirCola;
+		
 		// Separamos los datos
 		orig = arco.getOrigen(); dest = arco.getDestino(); 
 		
