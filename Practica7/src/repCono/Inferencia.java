@@ -6,6 +6,7 @@ package repCono;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,6 +19,9 @@ public class Inferencia {
 	// ATRIBUTOS
 	BaseCono BC; // base de conocimiento
 	String ob;  // objetivo (puede no haber)
+	HashMap<ClausHorn, Integer> cont = new HashMap<>();
+	HashMap<String, Boolean> inferido = new HashMap<>();
+	LinkedList<String> agenda = new LinkedList<String>();
 	
 	// pueden aniadirse atributos auxiliares si se estima oportuno
 	
@@ -28,6 +32,22 @@ public class Inferencia {
 	public Inferencia( BaseCono BC ) {
 		this.BC = BC;
 		this.ob = "*"; // convenio para indicar que no hay objetivo
+		
+		for (int i = 0; i< BC.getNumHechos(); i++) {
+			ClausHorn temp = BC.getBaseHechos().get(i);
+			cont.put(temp, temp.getNumPremisas());
+		}
+		for (ClausHorn c: BC.getBaseReglas()) {
+			cont.put(c, c.getNumPremisas());
+		}
+		
+		for (String s: BC.getListaHechos()) {
+			if (BC.esCierto(s)) {
+			agenda.add(s);
+			}
+		}
+		
+		
 	}
 	
 	/**
@@ -51,8 +71,26 @@ public class Inferencia {
 	 * @return cierto si se alcanza el objetivo, falso si no (o si no habia objetivo)
 	 */
 	public boolean encDelante( ) {
-		// TODO hay que completarlo
-
+		
+		while (!agenda.isEmpty()) {
+			String p = agenda.pop();
+			if (p == ob) {
+				return true;
+			}
+			if (inferido.get(p) == null /*|| inferido.get(p) == false*/) {
+				inferido.put(p, true);
+				for (ClausHorn c: BC.getBaseReglas()) {
+					if (c.tienePremisa(p)) {
+						cont.put(c, cont.get(c).intValue() - 1);
+					}
+					if (cont.get(c) == 0) {
+						agenda.add(c.getConsecuente());
+					}
+				}
+			}
+			
+		}
+		
 		return false;
 	}
 
@@ -63,8 +101,9 @@ public class Inferencia {
 	 * @return el conjunto de variables proposicionales que sabemos que son ciertas (hechos)
 	 */
 	public Set<String> getInferido() {
-		// TODO hay que cambiarlo para que devuelva el conocimiento adquirido
-	    return new HashSet<String>();
+		for (String s: inferido)
+		Set<String> temp = inferido.;
+	    return this.inferido.;
 	}
 	
 	// Pueden aniadirse metodos auxiliares si se estima oportuno
