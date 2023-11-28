@@ -1,6 +1,3 @@
-/**
- * 
- */
 package repCono;
 
 import java.util.Set;

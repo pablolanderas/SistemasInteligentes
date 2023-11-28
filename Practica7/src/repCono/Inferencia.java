@@ -74,10 +74,10 @@ public class Inferencia {
 		
 		while (!agenda.isEmpty()) {
 			String p = agenda.pop();
-			if (p == ob) {
+			if (p.equals(ob)) {
 				return true;
 			}
-			if (inferido.get(p) == null /*|| inferido.get(p) == false*/) {
+			if (!inferido.containsKey(p)) {
 				inferido.put(p, true);
 				for (ClausHorn c: BC.getBaseReglas()) {
 					if (c.tienePremisa(p)) {
@@ -101,9 +101,7 @@ public class Inferencia {
 	 * @return el conjunto de variables proposicionales que sabemos que son ciertas (hechos)
 	 */
 	public Set<String> getInferido() {
-		for (String s: inferido)
-		Set<String> temp = inferido.;
-	    return this.inferido.;
+	    return inferido.keySet();	
 	}
 	
 	// Pueden aniadirse metodos auxiliares si se estima oportuno
